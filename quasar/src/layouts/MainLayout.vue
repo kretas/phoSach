@@ -20,6 +20,7 @@
     </q-header>
 
     <q-drawer
+      v-if="1 == 2"
       v-model="leftDrawerOpen"
       show-if-above
       bordered

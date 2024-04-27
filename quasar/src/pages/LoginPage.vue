@@ -1,103 +1,115 @@
 <template>
-  <q-page class="container">
-    <div class="q-my-md">
-      <p class="text-h5 text-center">Premium Skins 10% off</p>
+  <div>
+    <div class="loginBg"></div>
+    <div class="container row justify-center items-center" style="height: 100vh">
+      <q-card class="card3d cardGlass" style="width:300px">
+        <q-tabs v-model="tab" dense active-color="black" indicator-color="accent" align="justify"
+          narrow-indicator>
+          <q-tab name="login" label="Sign In" noCaps class="q-pt-md" />
+          <q-tab name="register" label="Sign Up" noCaps class="q-pt-md" />
+        </q-tabs>
+        <q-tab-panels v-model="tab" animated>
+          <q-tab-panel name="login" class="q-pa-lg">
+            <p class="text-center text-overline">Login with your existing account</p>
+            <q-form @submit="signIn()" class="text-center">
+              <q-input v-model="email" label="Email" type="email" filled color="accent" required />
+              <q-input v-model="password" label="Password" type="password" color="accent" filled />
+              <q-btn :disabled="!email || !password" type="submit" label="Sign In" color="primary"
+                class="q-my-md q-px-lg q-py-sm rounded" no-caps style="border-radius: 15px" />
+            </q-form>
+            <q-spinner v-if="loading" color="accent" size="3em" :thickness="2" />
+            <p v-if="errorLogin !== ''" class="text-body1 text-center">{{ errorLogin }}</p>
+            <p v-if="submitted" class="text-body1">{{ submitted }}</p>
+          </q-tab-panel>
+
+          <q-tab-panel name="register" class="q-pa-lg">
+            <p class="text-center text-overline">Create a new User account</p>
+            <q-form @submit="signUp()" class="text-center">
+              <q-input v-model="email" label="Email" type="email" filled color="accent" required />
+              <q-input v-model="password" label="Password" type="password" filled color="accent" />
+              <q-input v-model="confirmPassword" label="Confirm Password" color="accent" type="password" filled />
+              <q-btn :disabled="!email || !password || password !== confirmPassword" type="submit" label="Sign Up"
+                color="primary" class="q-my-md q-px-lg q-py-sm rounded" no-caps style="border-radius: 15px" />
+            </q-form>
+            <q-spinner v-if="loading" color="accent" size="3em" :thickness="2" />
+            <p v-if="errorRegister" class="text-body1 text-center">{{ errorRegister }}</p>
+            <p v-if="submitted" class="text-body1">{{ submitted }}</p>
+          </q-tab-panel>
+        </q-tab-panels>
+      </q-card>
     </div>
-    <div class="row q-col-gutter-lg">
-      <div class="col-4" v-for="(card, index) in cardsAmount" :key="index">
-        <q-card class="my-card" bordered style="border-radius: 15px">
-          <q-img src="https://www.pcgamesn.com/wp-content/sites/pcgamesn/2024/01/league-of-legends-lol-yasuo-skin-old-forseen-season-14.jpg" />
-          <q-card-section>
-            <q-btn
-              fab
-              color="primary"
-              icon="place"
-              class="absolute"
-              style="top: 0; right: 12px; transform: translateY(-50%);"
-            />
-
-            <div class="row no-wrap items-center">
-              <div class="col text-h6 ellipsis">
-                Yasua Old Master
-              </div>
-              <div class="col-auto text-grey text-caption q-pt-md row no-wrap items-center">
-                <q-icon name="place" />
-                250 ft
-              </div>
-            </div>
-
-            <q-rating v-model="stars" :max="5" size="32px" />
-          </q-card-section>
-
-          <q-card-section class="q-pt-none">
-            <div class="text-subtitle1">
-              10 $・ League of Legends
-            </div>
-            <div class="text-caption text-grey">
-              Old man Yasuo never fails to kill
-            </div>
-          </q-card-section>
-
-          <q-separator />
-
-          <q-card-actions>
-            <q-btn flat round icon="event" />
-            <q-btn flat color="red">
-              Order
-            </q-btn>
-          </q-card-actions>
-        </q-card>
-      </div>
-    </div>
-    <div style="margin: 2rem;padding:2rem;background: #eee;box-shadow:5px 5px 20px 5px black;border-radius:25px;margin-bottom:5rem">
-      <div class="row q-col-gutter-md">
-        <div class="col-12 text-center">
-          <h1>welcome</h1>
-          <p class="text-body1">Please Login or Signup</p>
-        </div>
-        <div class="col-12">
-        <q-input outlined v-model="email" label="Email"/>
-        </div>
-        <div class="col-12">
-          <q-input outlined v-model="password" label="password" />
-        </div>
-        <div class="col-12 text-center">
-          {{ email }}
-          <q-btn @click="login(email, password)" color="teal">
-            <q-icon left size="3em" name="map" />
-            <div>Login</div>
-          </q-btn>
-        </div>
-        <div class="col-7 text-right">
-          <q-btn color="primary" label="Sign up" />
-        </div>
-        <div class="col-5">
-          <a href="#">Forgot password?</a>
-        </div>
-      </div>
-
-    </div>
-  </q-page>
+  </div>
 </template>
+<script setup>
+import { ref, onMounted } from "vue";
 
-<script>
-import { defineComponent } from 'vue';
+import { useRouter } from "vue-router";
+const router = useRouter();
 
-export default {
-  name: 'IndexPage',
-  data() {
-    return {
-      cardsAmount: 3,
-      email: "",
-      password: ""
+import { useAuthStore } from "stores/auth";
+const authStore = useAuthStore();
+
+
+const email = ref("ebie.ltd@proton.me");
+const tab = ref("login");
+const password = ref("");
+const confirmPassword = ref("");
+const loading = ref(false);
+const errorLogin = ref("");
+const errorRegister = ref("");
+const submitted = ref("");
+
+const signUp = async () => {
+  try {
+    const res = await authStore.signUp(email.value, password.value);
+    if (res) {
+      router.push('/dashboard')
     }
-  },
-  methods: {
-    login(email, password) {
-      console.log(email)
-      alert('login', email, password)
-      console.log('login', email, password)
+  } catch (e) {
+    console.error(e);
+    errorRegister.value = e
+  }
+};
+
+const signIn = async () => {
+  try {
+    const res = await authStore.signIn(email.value, password.value);
+    if (res) {
+      router.push('/dashboard')
     }
+  } catch (e) {
+    console.error(e);
+    errorLogin.value = 'Error Signing In'
+  }
+};
+onMounted(() => { });
+</script>
+<style scoped>
+.loginBg {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background: url('bg/saigon-skyline.jpg') no-repeat center center fixed;
+  background-size: 105%;
+  background-position: 0% 50%;
+  filter: blur(5px) brightness(0.80);
+  animation: moveBackground 60s linear infinite;
+}
+
+@keyframes moveBackground {
+  0% {
+    background-position: 0% 50%;
+    background-size: 105%;
+  }
+
+  50% {
+    background-position: 80% 50%;
+    background-size: 120%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+    background-size: 105%;
   }
 }
-</script>
+</style>

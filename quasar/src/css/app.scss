@@ -1,7 +1,82 @@
 // app global css in SCSS form
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Ysabeau+Infant:wght@300;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:opsz,wght@6..12,300;6..12,400;6..12,600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Anuphan:wght@300;400;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&family=Onest:wght@300;400;600&display=swap");
+body {
+  font-family: "Montserrat", sans-serif;
+  //font-family: "Ysabeau Infant", sans-serif;
+  //font-family: "Anuphan", sans-serif;
+  //letter-spacing: 0.1px;
+  background: #f9f9f9;
+}
 .container {
-  max-width: 1000px;
+  max-width: 1200px;
   margin: 0 auto;
-  margin-left: 2rem;
-  margin-right: 2rem;
+  padding: 0 16px;
+}
+.bordered {
+  border: 1px solid #ccc;
+}
+.q-card {
+  border-radius: 15px;
+}
+.full-vh {
+  height: 100vh;
+}
+.text-shadow-1 {
+  text-shadow: 1px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000, -1px 0 0 #000;
+}
+.box {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  color: white;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+@media screen and (max-width: $breakpoint-xs) {
+  .hide-xs {
+    display: none;
+  }
+}
+@media screen and (min-width: $breakpoint-sm) {
+  .show-sm {
+    display: inherit;
+  }
+}
+.cardGlass {
+  background: rgb(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+.darkGlass {
+  background: rgb(25, 0, 0, 0.55) !important;
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(150ms);
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+.card3d {
+  transition: transform 0.5s;
+  transform-style: preserve-3d;
+  transition-duration: 300ms;
+  transition-property: transform, box-shadow;
+  transition-timing-function: ease-out;
+  transform: rotate3d(0);
+  &:hover {
+    transform: scale(1.02);
+    transition-duration: 150ms;
+    box-shadow: 0px 5px 20px 5px #00000044 !important;
+  }
+}
+.q-dark {
+  &.card3d {
+    &:hover {
+      box-shadow: 0px 2px 20px 2px #fdfcfc44 !important;
+    }
+  }
 }

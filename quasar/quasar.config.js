@@ -16,8 +16,8 @@ export default configure((/* ctx */) => {
     // --> boot files are part of "main.js"
     // https://v2.quasar.dev/quasar-cli-vite/boot-files
     boot: [
-      
-      
+      "axios",
+
     ],
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#css
@@ -55,7 +55,10 @@ export default configure((/* ctx */) => {
 
       // publicPath: '/',
       // analyze: true,
-      // env: {},
+      env: {
+        BASE_URL: "https://negotiator.neonhappi.com",
+        TENANT: "aecc13b9-e198-4607-a624-968cfb2bce0f",
+      },
       // rawDefine: {}
       // ignorePublicFolder: true,
       // minify: false,
