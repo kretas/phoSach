@@ -1,7 +1,7 @@
 const routes = [
   {
     path: '/',
-    component: () => import('layouts/MainLayout.vue'),
+    component: () => import('layouts/SideNavLayout.vue'),
     children: [
       { path: '', component: () => import('pages/IndexPage.vue') }
     ]
@@ -11,6 +11,13 @@ const routes = [
     component: () => import('layouts/MainLayout.vue'),
     children: [
       { path: '', component: () => import('pages/LoginPage.vue') }
+    ]
+  },
+  {
+    path: '/project/:id?',
+    component: () => import('layouts/SideNavLayout.vue'),
+    children: [
+      { path: '', component: () => import('pages/ProjectPage.vue') }
     ]
   },
 

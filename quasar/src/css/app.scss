@@ -11,6 +11,15 @@ body {
   //letter-spacing: 0.1px;
   background: #f9f9f9;
 }
+.bg-gradient {
+  background-image: linear-gradient(to left top, #0443c2, #0066d9, #0085e7, #00a2f0, #00bef5, #44ccf8, #66d9fb, #83e6ff, #b1eaff, #d6eeff, #f0f5ff, #ffffff);
+  color: white;
+}
+.bg-gradient-primary-accent {
+  background-image: linear-gradient(to right bottom, #0443c2, #0071e2, #009af2, #00bef5, #10e1f5);
+  color: white;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+}
 .container {
   max-width: 1200px;
   margin: 0 auto;
@@ -45,6 +54,11 @@ body {
   .show-sm {
     display: inherit;
   }
+}
+.glass {
+  background: rgb(0, 0, 0, 0.15);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 .cardGlass {
   background: rgb(255, 255, 255, 0.15);

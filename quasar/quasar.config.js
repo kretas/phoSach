@@ -17,7 +17,7 @@ export default configure((/* ctx */) => {
     // https://v2.quasar.dev/quasar-cli-vite/boot-files
     boot: [
       "axios",
-
+      "i18n"
     ],
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#css

@@ -1,118 +1,105 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
-    <q-header elevated>
-      <q-toolbar>
-        <q-btn
-          flat
-          dense
-          round
-          icon="menu"
-          aria-label="Menu"
-          @click="toggleLeftDrawer"
-        />
+  <q-layout view="lHh lpr lFf">
+
+    <q-header reveal class="bg-white text-black">
+      <q-toolbar class="q-py-lg">
+        <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" />
 
         <q-toolbar-title>
-          PhoSach
+          <span class="text-h4">{{ $t(global.current.page) }}</span>
         </q-toolbar-title>
-
-        <div>Quasar v{{ $q.version }}</div>
       </q-toolbar>
     </q-header>
 
-    <q-drawer
-      v-if="1 == 2"
-      v-model="leftDrawerOpen"
-      show-if-above
-      bordered
-    >
-      <q-list>
-        <q-item-label
-          header
-        >
-          Essential Links
-        </q-item-label>
+    <q-drawer show-if-above v-model="leftDrawerOpen" side="left">
+      <div class="logo flex items-center">
+        <img src="logo.png"/>
+        <span class="text-h5 q-ml-md">{{ $t('title') }}</span>
+      </div>
+      <div class="text-center">
+        <q-avatar size="6rem">
+          <img :src="'users/'+auth.user.id + '.jpg'" style="object-fit: cover" />
+        </q-avatar>
+        <p class="text-caption q-mt-md q-mb-none">Welcome, {{ auth.user.role }}</p>
+        <p class="text-h6">{{ auth.user.fname }} {{ auth.user.lname }}</p>
 
-        <EssentialLink
-          v-for="link in linksList"
-          :key="link.title"
-          v-bind="link"
-        />
-      </q-list>
+      </div>
+      <div class="q-pt-lg">
+        <div v-for="item in sideNav" :key="item.to">
+          <q-btn @click="$router.push(`/${item.to}`)" noCaps :color="item.name === global.current.page ? 'primary' : 'black'" flat>{{ $t(item.label) }}</q-btn>
+        </div>
+    </div>
     </q-drawer>
 
     <q-page-container>
       <router-view />
     </q-page-container>
+
+    <q-footer reveal class="bg-transparent">
+      <a href="">{{ $t('footer.support') }}</a>
+    </q-footer>
+
   </q-layout>
 </template>
 
 <script>
-import { defineComponent, ref } from 'vue'
-import EssentialLink from 'components/EssentialLink.vue'
-
-const linksList = [
-  {
-    title: 'Docs',
-    caption: 'quasar.dev',
-    icon: 'school',
-    link: 'https://quasar.dev'
-  },
-  {
-    title: 'Github',
-    caption: 'github.com/quasarframework',
-    icon: 'code',
-    link: 'https://github.com/quasarframework'
-  },
-  {
-    title: 'Discord Chat Channel',
-    caption: 'chat.quasar.dev',
-    icon: 'chat',
-    link: 'https://chat.quasar.dev'
-  },
-  {
-    title: 'Forum',
-    caption: 'forum.quasar.dev',
-    icon: 'record_voice_over',
-    link: 'https://forum.quasar.dev'
-  },
-  {
-    title: 'Twitter',
-    caption: '@quasarframework',
-    icon: 'rss_feed',
-    link: 'https://twitter.quasar.dev'
-  },
-  {
-    title: 'Facebook',
-    caption: '@QuasarFramework',
-    icon: 'public',
-    link: 'https://facebook.quasar.dev'
-  },
-  {
-    title: 'Quasar Awesome',
-    caption: 'Community Quasar projects',
-    icon: 'favorite',
-    link: 'https://awesome.quasar.dev'
-  }
-]
-
-export default defineComponent({
-  name: 'MainLayout',
-
-  components: {
-    EssentialLink
-  },
-
-  data () {
+import { useAuthStore } from "stores/auth";
+import { useGlobalStore } from "stores/global";
+const auth = useAuthStore();
+const global = useGlobalStore();
+export default {
+  data() {
     return {
-      linksList,
-      leftDrawerOpen: false
-    }
+      leftDrawerOpen: false,
+      sideNav: [
+        {
+          icon: 'fa-solid fa-gauge',
+          name: "Dashboard",
+          label: 'nav.dashboard',
+          to: '/'
+        },
+        {
+          icon: 'fa-solid fa-gauge',
+          name: "Projects",
+          label: 'nav.projects',
+          to: '/projects'
+        },
+        {
+          icon: 'fa-solid fa-gauge',
+          name: "Profile",
+          label: 'nav.profile',
+          to: '/profile'
+        }
+      ]
+    };
   },
-
+  computed: {
+    global() {
+      return { current: global.current };
+    },
+    auth() {
+      return { user: auth.user };
+    },
+  },
   methods: {
     toggleLeftDrawer () {
       this.leftDrawerOpen = !this.leftDrawerOpen
     }
-  }
-})
+  },
+}
 </script>
+<style scoped type="text/scss">
+.logo{
+  margin: 1rem 2rem;
+  height: 6rem;
+  position: relative;
+  img {
+    height: 4rem;
+    width: auto;
+    object-fit: contain;
+    position: relative;
+  }
+
+}
+</style>
+

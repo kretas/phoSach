@@ -1,0 +1,34 @@
+[{
+  "id": "1",
+  "name": "National Day Vietnam Dance Celebration",
+  "description": "This is a project for the National Day Vietnam Dance Celebration District 1",
+  "location": "23 Đồng Khởi, Bến Nghé, Quận 1, Thành phố Hồ Chí Minh, Vietnam",
+  "category": "Students Spirit Showcase",
+  "startDate": "2024-09-29T00:00:00+07:00",
+  "endDate": "2024-09-29T23:59:59+07:00",
+  "tasks": [
+    {
+      "name": "Reserve a Time Slot for the Event",
+      "description": "This is a task for the project",
+      "owner": "0j1k2l3m-4n5o-6p7q-8r9s-0t1u2v3w4x5y",
+      "status": "done"
+    },
+    {
+      "name": "Reserve a Time Slot for the Event",
+      "description": "This is a task for the project",
+      "owner": "0j1k2l3m-4n5o-6p7q-8r9s-0t1u2v3w4x5y",
+      "status": "done"
+    }
+  ]
+},
+{
+  "id": "2",
+  "name": "Clean Up District 1 Initiative",
+  "description": "A volunteer project focused on cleaning the streets of District 1 to enhance community health and aesthetics.",
+  "location": "District 1, Thành phố Hồ Chí Minh, Vietnam",
+  "category": "Community Service",
+  "startDate": "2024-04-05T00:00:00+07:00",
+  "endDate": "2024-04-05T23:59:59+07:00"
+}
+]
+
