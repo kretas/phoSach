@@ -9,26 +9,51 @@
   "tasks": [
     {
       "name": "Reserve a Time Slot for the Event",
-      "description": "This is a task for the project",
+      "description": "Secure the venue for the date of the event.",
       "owner": "0j1k2l3m-4n5o-6p7q-8r9s-0t1u2v3w4x5y",
+      "deadline": "2024-09-29T00:00:00+07:00",
       "status": "done"
     },
     {
-      "name": "Reserve a Time Slot for the Event",
-      "description": "This is a task for the project",
-      "owner": "0j1k2l3m-4n5o-6p7q-8r9s-0t1u2v3w4x5y",
-      "status": "done"
+      "name": "Organize Event Staff and Volunteers",
+      "description": "Recruit and assign roles to volunteers and staff needed for the event.",
+      "owner": "9i0j1k2l-3m4n-5o6p-7q8r-9s0t1u2v3w4x",
+      "deadline": "2024-09-15T00:00:00+07:00",
+      "status": "pending"
+    },
+    {
+      "name": "Publicity and Promotion",
+      "description": "Create and distribute promotional materials to attract participants.",
+      "owner": "8h9i0j1k-2l3m-4n5o-6p7q-8r9s0t1u2v3w",
+      "deadline": "2024-09-01T00:00:00+07:00",
+      "status": "pending"
+    },
+    {
+      "name": "Arrange Catering and Amenities",
+      "description": "Organize food and other amenities for the event day.",
+      "owner": "7g8h9i0j-1k2l-3m4n-5o6p-7q8r9s0t1u2v",
+      "deadline": "2024-09-22T00:00:00+07:00",
+      "status": "pending"
     }
   ]
 },
 {
   "id": "2",
-  "name": "Clean Up District 1 Initiative",
+  "name": "Clean Up Street Đồng Khởi Initiative",
   "description": "A volunteer project focused on cleaning the streets of District 1 to enhance community health and aesthetics.",
-  "location": "District 1, Thành phố Hồ Chí Minh, Vietnam",
+  "location": "23 Đồng Khởi, Bến Nghé, Quận 1, Thành phố Hồ Chí Minh, Vietnam",
   "category": "Community Service",
   "startDate": "2024-04-05T00:00:00+07:00",
-  "endDate": "2024-04-05T23:59:59+07:00"
+  "endDate": "2024-04-05T23:59:59+07:00",
+  "tasks": [
+    {
+      "name": "Reserve a Time Slot for the Event",
+      "description": "Secure the venue for the date of the event.",
+      "owner": "0j1k2l3m-4n5o-6p7q-8r9s-0t1u2v3w4x5y",
+      "deadline": "2024-09-29T00:00:00+07:00",
+      "status": "done"
+    }
+  ]
 }
 ]
 

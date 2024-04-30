@@ -16,14 +16,17 @@
             <q-card-section class="row justify-between q-py-none">
               <div class="text-caption">Status: Waiting for Approval</div>
               <div class="text-caption">Total Progress</div>
-              <q-linear-progress rounded size="24px" :value="0.8" color="primary" class="q-mt-sm">
+              <q-linear-progress rounded size="24px" :value="taskProgressValue" color="primary" class="q-mt-sm">
                 <div class="absolute-full flex flex-center">
-                  <q-badge color="transparent" text-color="white" label="8/10 Tasks" />
+                  <q-badge color="transparent" text-color="white" :label="taskProgressLabel" />
                 </div>
               </q-linear-progress>
             </q-card-section>
           </q-card-section>
         </q-card>
+      </div>
+      <div>
+        <p class="text-h6">Participants</p>
       </div>
     </div>
     <div v-else>
@@ -56,6 +59,22 @@ export default {
     this.global.current.page = "Project"
   },
   methods: {
+    taskProgressLabel(project) {
+      if (!project || !project.tasks) {
+        return 'No tasks';
+      }
+      const totalTasks = project.tasks.length;
+      const completedTasks = project.tasks.filter(task => task.status === 'done').length;
+      return `${completedTasks}/${totalTasks} Tasks Completed`;
+    },
+    taskProgressValue(project) {
+      if (!project || !project.tasks) {
+        return 0; // No tasks available
+      }
+      const totalTasks = project.tasks.length;
+      const completedTasks = project.tasks.filter(task => task.status === 'done').length;
+      return completedTasks / totalTasks;
+    },
     daysRemaining(endDate) {
       const now = new Date();
       const end = new Date(endDate);

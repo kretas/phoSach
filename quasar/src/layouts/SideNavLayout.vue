@@ -1,22 +1,28 @@
 <template>
   <q-layout view="lHh lpr lFf">
 
-    <q-header reveal class="bg-white text-black">
-      <q-toolbar class="q-py-lg">
+    <q-header reveal class="bg-white text-black border-bottom">
+      <q-toolbar class="q-px-lg q-py-md">
         <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" />
 
         <q-toolbar-title>
-          <span class="text-h4">{{ $t(global.current.page) }}</span>
+          <span class="text-h6">{{ $t(global.current.page) }}</span>
         </q-toolbar-title>
+        <div class="flex items-center q-gutter-md">
+          <span class="text-body2">{{ auth.user.role }}, {{ auth.user.fname }} {{ auth.user.lname }}</span>
+          <q-avatar size="3rem">
+          <img :src="'users/'+auth.user.id + '.jpg'" style="object-fit: cover" />
+        </q-avatar>
+        </div>
       </q-toolbar>
     </q-header>
 
-    <q-drawer show-if-above v-model="leftDrawerOpen" side="left">
-      <div class="logo flex items-center">
+    <q-drawer show-if-above v-model="leftDrawerOpen" side="left" class="border-right">
+      <div class="logo flex items-center q-my-md q-mx-lg">
         <img src="logo.png"/>
-        <span class="text-h5 q-ml-md">{{ $t('title') }}</span>
+        <span class="text-h5 q-ml-md text-bold text-secondary" style="letter-spacing: 4px">{{ $t('title') }}</span>
       </div>
-      <div class="text-center">
+      <div class="text-center q-pa-lg">
         <q-avatar size="6rem">
           <img :src="'users/'+auth.user.id + '.jpg'" style="object-fit: cover" />
         </q-avatar>
@@ -24,7 +30,7 @@
         <p class="text-h6">{{ auth.user.fname }} {{ auth.user.lname }}</p>
 
       </div>
-      <div class="q-pt-lg">
+      <div class="q-pt-lg q-px-lg">
         <div v-for="item in sideNav" :key="item.to">
           <q-btn @click="$router.push(`/${item.to}`)" noCaps :color="item.name === global.current.page ? 'primary' : 'black'" flat>{{ $t(item.label) }}</q-btn>
         </div>
@@ -90,11 +96,10 @@ export default {
 </script>
 <style scoped type="text/scss">
 .logo{
-  margin: 1rem 2rem;
-  height: 6rem;
+  height: 3rem;
   position: relative;
   img {
-    height: 4rem;
+    height: 3rem;
     width: auto;
     object-fit: contain;
     position: relative;

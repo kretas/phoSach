@@ -9,7 +9,16 @@ body {
   //font-family: "Ysabeau Infant", sans-serif;
   //font-family: "Anuphan", sans-serif;
   //letter-spacing: 0.1px;
-  background: #f9f9f9;
+  //background: #f9f9f9;
+}
+.border {
+  border: 1px solid #ccc;
+}
+.border-bottom {
+  border-bottom: 1px solid #ccc;
+}
+.border-right {
+  border-right: 1px solid #ccc;
 }
 .bg-gradient {
   background-image: linear-gradient(to left top, #0443c2, #0066d9, #0085e7, #00a2f0, #00bef5, #44ccf8, #66d9fb, #83e6ff, #b1eaff, #d6eeff, #f0f5ff, #ffffff);
@@ -33,6 +42,9 @@ body {
 }
 .full-vh {
   height: 100vh;
+}
+.text-shadow {
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
 }
 .text-shadow-1 {
   text-shadow: 1px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000, -1px 0 0 #000;
