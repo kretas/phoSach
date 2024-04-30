@@ -5,35 +5,16 @@
         <div class="text-h5 text-primary text-bold">Upcoming Projects</div>
       </div>
       <div v-for="(entry, index) in sortedProjects" :key="entry.id" class="col-6">
-        <q-card :class="index === 0 ? 'bg-gradient-primary-accent' : 'bg-grey-1'" class="shadow-0 border">
-          <div style="position: absolute; top: 1rem; right: 1rem;z-index:9">
-            <q-btn @click="$router.push(`/project/${entry.id}`)" flat noCaps>:</q-btn>
-          </div>
-          <q-card-section>
-            <q-card-section>
-              <p class="text-body1 text-bold q-mb-sm" style="min-height: 48px;">{{ entry.name }}</p>
-              <div class="text-caption" style="min-height: 40px;"><span class="text-bold">Quận 1</span>, {{ entry.location }}</div>
-            </q-card-section>
-            <q-card-section class="row justify-between q-py-none">
-              <div class="text-caption text-bold">Waiting for Approval</div>
-              <div class="text-caption text-bold">{{ daysRemaining(entry.endDate) }}</div>
-              <div class="text-caption">{{ new Date(entry.startDate).toLocaleString('default', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }) }}</div>
-
-            </q-card-section>
-            <q-card-section class="row justify-between q-py-none">
-              <q-linear-progress v-if="entry.tasks" rounded size="24px" :value="taskProgressValue(entry)" color="primary" class="q-mt-sm">
-                <div class="absolute-full flex flex-center">
-                  <q-badge color="transparent" text-color="white" :label="taskProgressLabel(entry)" class="text-shadow" />
-                </div>
-              </q-linear-progress>
-            </q-card-section>
-          </q-card-section>
-        </q-card>
+        <ProjectsCard :project="entry" :bgGradient="index === 0" />
       </div>
     </div>
     <div class="row q-col-gutter-lg q-mt-lg">
       <div class="col-12">
         <div class="text-h5 text-primary text-bold">Your Tasks</div>
+      </div>
+      <div v-for="task in openTasks" :key="task.id">
+        {{ task.name }}
+        <q-btn @click="$router.push(`/project/${task.project}`)" flat noCaps>View</q-btn>
       </div>
     </div>
   </q-page>
@@ -41,10 +22,16 @@
 
 <script>
 import { defineComponent } from 'vue';
+import ProjectsCard from 'components/ProjectsCard.vue';
 import { useGlobalStore } from "stores/global";
 const global = useGlobalStore();
+import { useAuthStore } from "stores/auth";
+const auth = useAuthStore();
 export default defineComponent({
   name: 'IndexPage',
+  components: {
+    ProjectsCard
+  },
   async created() {
     await global.loadData();
   },
@@ -55,6 +42,16 @@ export default defineComponent({
         const dateB = new Date(b.startDate);
         return dateA - dateB;
       });
+    },
+    openTasks() {
+      return global.projects.flatMap(project =>
+        project.tasks.map(task => ({
+          ...task,
+          project: project.id
+        }))
+      )
+      .filter(task => task.status === 'pending' && task.owner === auth.user.id)
+      .sort((a, b) => new Date(a.deadline) - new Date(b.deadline));
     }
   },
   methods: {

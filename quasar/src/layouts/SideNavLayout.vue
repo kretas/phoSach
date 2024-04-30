@@ -6,7 +6,7 @@
         <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" />
 
         <q-toolbar-title>
-          <span class="text-h6">{{ $t(global.current.page) }}</span>
+          <span class="text-h6 q-mb-none">{{ $t(global.current.page) }}</span>
         </q-toolbar-title>
         <div class="flex items-center q-gutter-md">
           <span class="text-body2">{{ auth.user.role }}, {{ auth.user.fname }} {{ auth.user.lname }}</span>

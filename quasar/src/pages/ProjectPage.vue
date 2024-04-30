@@ -2,28 +2,7 @@
   <q-page class="q-ma-lg">
     <div v-if="project">
       <div>
-        <q-card class="bg-gradient-primary-accent shadow-0">
-          <q-card-section>
-            <q-card-section>
-              <p class="text-body1 text-bold" style="min-height: 48px;">{{ project.name }}</p>
-              <div class="text-subtitle1">{{ project.description }}</div>
-              <div class="text-caption" style="min-height: 40px;"><span class="text-bold">Quận 1</span>, {{ project.location }}</div>
-            </q-card-section>
-            <q-card-section class="row justify-between q-py-none">
-              <div class="text-caption">{{ new Date(project.startDate).toLocaleString('default', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }) }}</div>
-              <div class="text-caption">{{ daysRemaining(project.endDate) }}</div>
-            </q-card-section>
-            <q-card-section class="row justify-between q-py-none">
-              <div class="text-caption">Status: Waiting for Approval</div>
-              <div class="text-caption">Total Progress</div>
-              <q-linear-progress rounded size="24px" :value="taskProgressValue" color="primary" class="q-mt-sm">
-                <div class="absolute-full flex flex-center">
-                  <q-badge color="transparent" text-color="white" :label="taskProgressLabel" />
-                </div>
-              </q-linear-progress>
-            </q-card-section>
-          </q-card-section>
-        </q-card>
+        <ProjectsCard :project="project" :bgGradient="true" />
       </div>
       <div>
         <p class="text-h6">Participants</p>
@@ -39,9 +18,12 @@
 <script>
 import { useGlobalStore } from "stores/global";
 const global = useGlobalStore();
-
+import ProjectsCard from 'components/ProjectsCard.vue';
 export default {
   name: 'ProjectPage',
+  components: {
+    ProjectsCard
+  },
   data() {
     return {
       project: null
