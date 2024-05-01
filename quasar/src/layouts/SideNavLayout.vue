@@ -11,8 +11,8 @@
         <div class="flex items-center q-gutter-md">
           <span class="text-body2">{{ auth.user.role }}, {{ auth.user.fname }} {{ auth.user.lname }}</span>
           <q-avatar size="3rem">
-          <img :src="'users/'+auth.user.id + '.jpg'" style="object-fit: cover" />
-        </q-avatar>
+            <img :src="'users/'+auth.user.id + '.jpg'" style="object-fit: cover" />
+          </q-avatar>
         </div>
       </q-toolbar>
     </q-header>
@@ -30,7 +30,7 @@
         <p class="text-h6">{{ auth.user.fname }} {{ auth.user.lname }}</p>
 
       </div>
-      <div class="q-pt-lg q-px-lg">
+      <div>
         <div v-for="item in sideNav" :key="item.to">
           <q-btn @click="$router.push(`/${item.to}`)" noCaps :color="item.name === global.current.page ? 'primary' : 'black'" flat>{{ $t(item.label) }}</q-btn>
         </div>
@@ -41,8 +41,7 @@
       <router-view />
     </q-page-container>
 
-    <q-footer reveal class="bg-transparent">
-      <a href="">{{ $t('footer.support') }}</a>
+    <q-footer reveal class="bg-transparent q-pt-lg">
     </q-footer>
 
   </q-layout>

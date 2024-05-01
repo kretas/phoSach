@@ -10,11 +10,46 @@
     </div>
     <div class="row q-col-gutter-lg q-mt-lg">
       <div class="col-12">
-        <div class="text-h5 text-primary text-bold">Your Tasks</div>
+        <div class="text-h5 text-primary text-bold">Important Open Tasks</div>
       </div>
-      <div v-for="task in openTasks" :key="task.id">
-        {{ task.name }}
-        <q-btn @click="$router.push(`/project/${task.project}`)" flat noCaps>View</q-btn>
+      <div v-for="task in openTasks" :key="task.id" class="col-4">
+        <q-card class="shadow-0 border">
+          <q-card-section>
+            <q-btn @click="$router.push(`/project/${task.projectId}`)" size="sm" noCaps color="secondary" outline class="q-mb-sm">{{task.projectName}}</q-btn>
+            <div class="text-body2 q-my-sm">{{ task.name }}</div>
+            <div class="row items-center q-gutter-sm">
+              <q-avatar size="2rem">
+                <img :src="'users/'+task.owner + '.jpg'" style="object-fit: cover" />
+              </q-avatar>
+              <div class="text-caption">{{ daysRemaining(task.deadline) }}</div>
+            </div>
+          </q-card-section>
+        </q-card>
+      </div>
+    </div>
+    <div class="row q-col-gutter-sm q-mt-lg">
+      <div class="col-12">
+        <div class="text-h5 text-primary text-bold">History</div>
+      </div>
+      <div v-for="(log, index) in logs" :key="index" class="col-12">
+        <q-card class="shadow-0 border">
+          <q-card-section class="q-pa-sm">
+            <div class="row items-center q-col-gutter-sm justify-between">
+              <div class="col-2 row items-center">
+                <q-avatar size="2rem">
+                <img :src="'users/'+log.user + '.jpg'" style="object-fit: cover" />
+              </q-avatar>
+              <div class="q-ml-sm text-caption text-bold">{{ global.userDetail(log.user).firstName }} {{ global.userDetail(log.user).lastName }} </div>
+              </div>
+              <div class="col-3 text-caption">{{ log.text }}</div>
+              <div class="col-2 text-caption">{{ new Date(log.date).toLocaleString('default', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }) }}</div>
+              <div class="col-3 text-right">
+                <q-btn @click="$router.push(`/project/${log.projectId}`)" size="sm" noCaps color="primary" outline class="q-mb-sm">{{log.projectName}}</q-btn>
+              </div>
+
+            </div>
+          </q-card-section>
+        </q-card>
       </div>
     </div>
   </q-page>
@@ -36,6 +71,11 @@ export default defineComponent({
     await global.loadData();
   },
   computed: {
+    global() {
+      return {
+        userDetail: global.userDetail,
+      };
+    },
     sortedProjects() {
       return global.projects.slice().sort((a, b) => {
         const dateA = new Date(a.startDate);
@@ -43,14 +83,32 @@ export default defineComponent({
         return dateA - dateB;
       });
     },
+    openAssignedTasks() {
+      return global.projects.flatMap(project =>
+        project.tasks.map(task => ({
+          ...task,
+          projectId: project.id,
+          projectName: project.name
+        }))
+      )
+      .filter(task => task.status === 'pending' && task.owner === auth.user.id)
+      .sort((a, b) => new Date(a.deadline) - new Date(b.deadline));
+    },
     openTasks() {
       return global.projects.flatMap(project =>
         project.tasks.map(task => ({
           ...task,
-          project: project.id
+          projectId: project.id,
+          projectName: project.name
         }))
       )
-      .filter(task => task.status === 'pending' && task.owner === auth.user.id)
+      .filter(task => task.status === 'pending')
+      .sort((a, b) => new Date(a.deadline) - new Date(b.deadline));
+    },
+    logs() {
+      return global.logs.map(log => ({
+          ...log,
+        }))
       .sort((a, b) => new Date(a.deadline) - new Date(b.deadline));
     }
   },

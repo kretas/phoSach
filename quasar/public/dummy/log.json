@@ -1,0 +1,27 @@
+[
+  {
+    "user": "1a2b3c4d-5e6f-7g8h-9i0j-1k2l3m4n5o6p",
+    "text": "Report is ready",
+    "projectId": "1",
+    "projectName": "National Day Vietnam Dance Celebration",
+    "date": "2024-04-29T00:00:00+07:00",
+    "type": "report"
+  },
+  {
+    "user": "6f7g8h9i-0j1k-2l3m-4n5o-6p7q8r9s0t1u",
+    "text": "Student Left the Project",
+    "projectId": "1",
+    "projectName": "National Day Vietnam Dance Celebration",
+    "date": "2024-04-29T00:00:00+07:00",
+    "type": "notification"
+  },
+  {
+    "user": "5e6f7g8h-9i0j-1k2l-3m4n-5o6p7q8r9s0t",
+    "text": "Student applied for Project",
+    "projectId": "2",
+    "projectName": "Clean Up Street Đồng Khởi Initiative",
+    "date": "2024-04-29T00:00:00+07:00",
+    "type": "notification"
+  }
+]
+

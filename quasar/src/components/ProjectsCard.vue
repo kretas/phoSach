@@ -16,9 +16,9 @@
 
         </q-card-section>
         <q-card-section class="row justify-between q-py-none">
-          <q-linear-progress v-if="project.tasks" rounded size="24px" :value="taskProgressValue(entry)" color="primary" class="q-mt-sm">
+          <q-linear-progress v-if="project.tasks" rounded size="24px" :value="taskProgressValue(project)" color="primary" class="q-mt-sm">
             <div class="absolute-full flex flex-center">
-              <q-badge color="transparent" text-color="white" :label="taskProgressLabel(entry)" class="text-shadow" />
+              <q-badge color="transparent" text-color="white" :label="taskProgressLabel(project)" class="text-shadow" />
             </div>
           </q-linear-progress>
         </q-card-section>
@@ -61,7 +61,7 @@ export default {
     },
     taskProgressValue(project) {
       if (!project || !project.tasks) {
-        return 0; // No tasks available
+        return 0;
       }
       const totalTasks = project.tasks.length;
       const completedTasks = project.tasks.filter(task => task.status === 'done').length;
